@@ -15,7 +15,7 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int productId)
+    public async Task DeleteAsync(Guid productId)
     {
         var product = await _context.Products.FindAsync(productId);
         if (product == null)
@@ -37,6 +37,13 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
     public async Task<IEnumerable<Product>> GetProductsAsync()
     {
         return await _context.Products.AsNoTracking().ToListAsync();
+    }
+
+    public async Task<IEnumerable<Product>> GetAllProductsByConditionAsync(Func<Product, bool> condition)
+    {
+        var products = await _context.Products.AsNoTracking().Where(product => condition(product)).ToListAsync();
+
+        return products;
     }
 
     public async Task UpdateAsync(Product product)

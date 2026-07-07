@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace eCommerce.DAL;
 
-public static class DependancyInjection
+public static class DependencyInjection
 {
     public static IServiceCollection AddDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
     {
