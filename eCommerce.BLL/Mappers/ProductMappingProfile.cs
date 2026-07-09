@@ -18,7 +18,7 @@ public class ProductMappingProfile : Profile
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
             .ForMember(dest => dest.QuantityInStock, opt => opt.MapFrom(src => src.QuantityInStock))
             .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
-            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.ToString()));
 
         CreateMap<Product, ProductResponse>()
             .ForMember(dest => dest.ProductID, opt => opt.MapFrom(src => src.ProductID))
@@ -33,6 +33,6 @@ public class ProductMappingProfile : Profile
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
             .ForMember(dest => dest.QuantityInStock, opt => opt.MapFrom(src => src.QuantityInStock))
             .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
-            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.ToString()));
     }
 }

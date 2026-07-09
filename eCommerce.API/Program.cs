@@ -1,3 +1,4 @@
+using eCommerce.API.Middlewares;
 using eCommerce.BLL;
 using eCommerce.DAL;
 
@@ -7,6 +8,15 @@ builder.Services.AddDataAccessLayer(builder.Configuration);
 
 builder.Services.AddBusinessLogicLayer();
 
+
 var app = builder.Build();
+
+app.UseExceptionHandlingMiddleware();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+
 
 app.Run();

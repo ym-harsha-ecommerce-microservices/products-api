@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCommerce.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ public class ProductResponse
 {
     public Guid ProductID { get; set; }
     public string? ProductName { get; set; }
-    public string? Category { get; set; }
+    public CategoryOptions Category { get; set; }
     public double? UnitPrice { get; set; }
     public int? QuantityInStock { get; set; }
 }

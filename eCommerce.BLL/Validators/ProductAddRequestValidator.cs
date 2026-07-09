@@ -20,7 +20,8 @@ public class ProductAddRequestValidator : AbstractValidator<ProductAddRequest>
             .MaximumLength(100).WithMessage("Product Name must not exceed 100 characters.");
 
         RuleFor(p => p.Category)
-            .NotEmpty().WithMessage("Category is required.");
+            .NotEmpty().WithMessage("Category is required.")
+            .IsInEnum().WithMessage("Category must be exit");
 
         RuleFor(p => p.UnitPrice)
             .NotNull().WithMessage("Unit Price is required.")

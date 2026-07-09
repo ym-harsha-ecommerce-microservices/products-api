@@ -12,8 +12,9 @@ public interface IProductService
 {
     Task<IEnumerable<ProductResponse>> GetAllAsync();
     Task<IEnumerable<ProductResponse>> GetAllProductsByConditionAsync(Func<Product, bool> condition);
-    Task<ProductResponse> AddProductAsync(ProductAddRequest productAddRequest);
-    Task<ProductResponse> UpdateProductAsync(ProductUpdateRequest productUpdateRequest);
-    Task DeleteProductAsync(Guid id);
+    Task<ProductResponse?> GetProductByConditionAsync(Func<Product, bool> condition);
+    Task<ProductResponse?> CreateProductAsync(ProductAddRequest productAddRequest);
+    Task<ProductResponse?> UpdateProductAsync(ProductUpdateRequest productUpdateRequest);
+    Task<bool> DeleteProductAsync(Guid id);
 
 }

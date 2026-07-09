@@ -9,21 +9,25 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
 {
     private readonly ApplicationDbContext _context = context;
 
-    public async Task CreateAsync(Product product)
+    public async Task<Product?> CreateAsync(Product product)
     {
         await _context.Products.AddAsync(product);
-        await _context.SaveChangesAsync();
+        var rowAffected = await _context.SaveChangesAsync();
+        if (rowAffected > 0)
+            return product;
+        return null;
     }
 
-    public async Task DeleteAsync(Guid productId)
+    public async Task<bool> DeleteAsync(Guid productId)
     {
         var product = await _context.Products.FindAsync(productId);
         if (product == null)
         {
-            return;
+            return false;
         }
         _context.Products.Remove(product);
-        await _context.SaveChangesAsync();
+        var rowAffected = await _context.SaveChangesAsync();
+        return rowAffected > 0;
     }
 
     public async Task<Product?> GetProductByConditionAsync(Func<Product, bool> condition)
@@ -46,9 +50,13 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
         return products;
     }
 
-    public async Task UpdateAsync(Product product)
+    public async Task<Product?> UpdateAsync(Product product)
     {
+
         _context.Entry<Product>(product).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        var rowAffectded = await _context.SaveChangesAsync();
+        if (rowAffectded > 0)
+            return product;
+        return null;
     }
 }
