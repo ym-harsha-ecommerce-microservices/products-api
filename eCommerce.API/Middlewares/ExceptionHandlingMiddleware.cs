@@ -15,20 +15,33 @@ public class ExceptionHandlingMiddleware
         _logger = logger;
     }
 
-    public async Task Invoke(HttpContext httpContext)
+    public async Task InvokeAsync(HttpContext httpContext)
     {
 
         try
         {
             await _next(httpContext);
         }
+        catch (ArgumentException ex)
+        {
+            // catch validations
+            _logger.LogError(ex, "Validation or Argument error occurred.");
+
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            httpContext.Response.ContentType = "application/json";
+
+
+            await httpContext.Response.WriteAsJsonAsync(ex.Message.Split(","));
+
+        }
         catch (Exception ex)
         {
-            _logger.LogError($"{ex.GetType().ToString()} : {ex.Message}");
-            if (ex.InnerException != null)
-            {
-                _logger.LogError($"{ex.InnerException.GetType().ToString()} : {ex.InnerException.Message}");
-            }
+            _logger.LogError(ex, "An unexpected error occurred in the server.");
+
+            httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            httpContext.Response.ContentType = "application/json";
+
+            await httpContext.Response.WriteAsJsonAsync(new { Error = "An unexpected error occurred. Please try again later." });
         }
 
     }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,12 +49,12 @@ public class ProductService(IProductsRepository productsRepository, IMapper mapp
         return mapper.Map<IEnumerable<ProductResponse>>(products);
     }
 
-    public async Task<IEnumerable<ProductResponse>> GetAllProductsByConditionAsync(Func<Product, bool> condition)
+    public async Task<IEnumerable<ProductResponse>> GetAllProductsByConditionAsync(Expression<Func<Product, bool>> condition)
     {
         var products = await productsRepository.GetAllProductsByConditionAsync(condition);
         return mapper.Map<IEnumerable<ProductResponse>>(products);
     }
-    public async Task<ProductResponse?> GetProductByConditionAsync(Func<Product, bool> condition)
+    public async Task<ProductResponse?> GetProductByConditionAsync(Expression<Func<Product, bool>> condition)
     {
         var product = await productsRepository.GetProductByConditionAsync(condition);
 

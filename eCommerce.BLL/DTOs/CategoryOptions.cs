@@ -8,5 +8,5 @@ namespace eCommerce.DAL.Entities;
 
 public enum CategoryOptions
 {
-    Electronics, HomeAppliances, Furniture, Accessories
+    None, Electronics, HomeAppliances, Furniture, Accessories
 }

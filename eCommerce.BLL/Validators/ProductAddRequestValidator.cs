@@ -21,7 +21,7 @@ public class ProductAddRequestValidator : AbstractValidator<ProductAddRequest>
 
         RuleFor(p => p.Category)
             .NotEmpty().WithMessage("Category is required.")
-            .IsInEnum().WithMessage("Category must be exit");
+            .IsInEnum().WithMessage("Category must be valid.");
 
         RuleFor(p => p.UnitPrice)
             .NotNull().WithMessage("Unit Price is required.")

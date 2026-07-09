@@ -2,6 +2,7 @@
 using eCommerce.DAL.Entities;
 using eCommerce.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace eCommerce.DAL.Repositories.Implementations;
 
@@ -30,10 +31,10 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
         return rowAffected > 0;
     }
 
-    public async Task<Product?> GetProductByConditionAsync(Func<Product, bool> condition)
+    public async Task<Product?> GetProductByConditionAsync(Expression<Func<Product, bool>> condition)
     {
 
-        var product = await _context.Products.FirstOrDefaultAsync(product => condition.Invoke(product));
+        var product = await _context.Products.FirstOrDefaultAsync(condition);
 
         return product;
     }
@@ -43,9 +44,10 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
         return await _context.Products.AsNoTracking().ToListAsync();
     }
 
-    public async Task<IEnumerable<Product>> GetAllProductsByConditionAsync(Func<Product, bool> condition)
+    public async Task<IEnumerable<Product>> GetAllProductsByConditionAsync(Expression<Func<Product, bool>> condition)
     {
-        var products = await _context.Products.AsNoTracking().Where(product => condition(product)).ToListAsync();
+
+        var products = await _context.Products.AsNoTracking().Where(condition).ToListAsync();
 
         return products;
     }
