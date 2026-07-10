@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eCommerce.BLL.DTOs;
+using eCommerce.BLL.Exceptions;
 using eCommerce.BLL.Services.Contracts;
 using eCommerce.DAL.Entities;
 using eCommerce.DAL.Repositories.Contracts;
@@ -25,8 +26,11 @@ public class ProductService(IProductsRepository productsRepository, IMapper mapp
 
         if (!result.IsValid)
         {
-            string errors = string.Join(", ", result.Errors.Select(x => x.ErrorMessage));
-            throw new ArgumentException(errors);
+
+            var errors = result.Errors.GroupBy(temp => temp.PropertyName)
+                .ToDictionary(grp => grp.Key, grp => grp.Select(err => err.ErrorMessage).ToArray());
+
+            throw new CustomValidationException(errors);
         }
 
         var product = mapper.Map<Product>(productAddRequest);
@@ -72,8 +76,11 @@ public class ProductService(IProductsRepository productsRepository, IMapper mapp
         var result = await productUpdateValidator.ValidateAsync(productUpdateRequest);
         if (!result.IsValid)
         {
-            string errors = string.Join(", ", result.Errors.Select(e => e.ErrorMessage));
-            throw new ArgumentException(errors);
+
+            var errors = result.Errors.GroupBy(e => e.PropertyName)
+                .ToDictionary(grp => grp.Key, grp => grp.Select(err => err.ErrorMessage).ToArray());
+
+            throw new CustomValidationException(errors);
         }
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using eCommerce.BLL.Exceptions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
@@ -22,7 +23,18 @@ public class ExceptionHandlingMiddleware
         {
             await _next(httpContext);
         }
-        catch (ArgumentException ex)
+        catch (ArgumentNullException ex)
+        {
+            // catch validations
+            _logger.LogError(ex, "Argument null error occurred.");
+
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            httpContext.Response.ContentType = "application/json";
+
+            await httpContext.Response.WriteAsJsonAsync(ex.Message);
+
+        }
+        catch (CustomValidationException ex)
         {
             // catch validations
             _logger.LogError(ex, "Validation or Argument error occurred.");
@@ -30,8 +42,14 @@ public class ExceptionHandlingMiddleware
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             httpContext.Response.ContentType = "application/json";
 
+            var problemDetails = new HttpValidationProblemDetails(ex.Errors)
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "One or more validation errors occurred."
+            };
 
-            await httpContext.Response.WriteAsJsonAsync(ex.Message.Split(","));
+
+            await httpContext.Response.WriteAsJsonAsync(problemDetails);
 
         }
         catch (Exception ex)
