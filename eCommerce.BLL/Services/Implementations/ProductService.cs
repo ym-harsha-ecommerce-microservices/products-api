@@ -17,6 +17,7 @@ namespace eCommerce.BLL.Services.Implementations;
 
 public class ProductService(IProductsRepository productsRepository, IMapper mapper, IValidator<ProductAddRequest> productAddValidator, IValidator<ProductUpdateRequest> productUpdateValidator) : IProductService
 {
+    /// <inheritdoc/>
     public async Task<ProductResponse?> CreateProductAsync(ProductAddRequest productAddRequest)
     {
         if (productAddRequest == null)
@@ -41,23 +42,24 @@ public class ProductService(IProductsRepository productsRepository, IMapper mapp
 
         return mapper.Map<ProductResponse>(product);
     }
-
+    /// <inheritdoc/>
     public async Task<bool> DeleteProductAsync(Guid id)
     {
         return await productsRepository.DeleteAsync(id);
     }
-
+    /// <inheritdoc/>
     public async Task<IEnumerable<ProductResponse>> GetAllAsync()
     {
         var products = await productsRepository.GetProductsAsync();
         return mapper.Map<IEnumerable<ProductResponse>>(products);
     }
-
+    /// <inheritdoc/>
     public async Task<IEnumerable<ProductResponse>> GetAllProductsByConditionAsync(Expression<Func<Product, bool>> condition)
     {
         var products = await productsRepository.GetAllProductsByConditionAsync(condition);
         return mapper.Map<IEnumerable<ProductResponse>>(products);
     }
+    /// <inheritdoc/>
     public async Task<ProductResponse?> GetProductByConditionAsync(Expression<Func<Product, bool>> condition)
     {
         var product = await productsRepository.GetProductByConditionAsync(condition);
@@ -67,7 +69,7 @@ public class ProductService(IProductsRepository productsRepository, IMapper mapp
 
         return mapper.Map<ProductResponse>(product);
     }
-
+    /// <inheritdoc/>
     public async Task<ProductResponse?> UpdateProductAsync(ProductUpdateRequest productUpdateRequest)
     {
         if (productUpdateRequest == null)

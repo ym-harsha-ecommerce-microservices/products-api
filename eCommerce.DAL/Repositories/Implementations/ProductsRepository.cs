@@ -10,6 +10,7 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
 {
     private readonly ApplicationDbContext _context = context;
 
+    /// <inheritdoc/>
     public async Task<Product?> CreateAsync(Product product)
     {
         await _context.Products.AddAsync(product);
@@ -18,7 +19,7 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
             return product;
         return null;
     }
-
+    /// <inheritdoc/>
     public async Task<bool> DeleteAsync(Guid productId)
     {
         var product = await _context.Products.FindAsync(productId);
@@ -30,7 +31,7 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
         var rowAffected = await _context.SaveChangesAsync();
         return rowAffected > 0;
     }
-
+    /// <inheritdoc/>
     public async Task<Product?> GetProductByConditionAsync(Expression<Func<Product, bool>> condition)
     {
 
@@ -38,11 +39,12 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
 
         return product;
     }
-
+    /// <inheritdoc/>
     public async Task<IEnumerable<Product>> GetProductsAsync()
     {
         return await _context.Products.AsNoTracking().ToListAsync();
     }
+    /// <inheritdoc/>
 
     public async Task<IEnumerable<Product>> GetAllProductsByConditionAsync(Expression<Func<Product, bool>> condition)
     {
@@ -51,7 +53,7 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
 
         return products;
     }
-
+    /// <inheritdoc/>
     public async Task<Product?> UpdateAsync(Product product)
     {
 
