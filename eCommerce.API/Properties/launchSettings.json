@@ -8,7 +8,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "SERVER": "localhost",
         "USER": "root",
-        "PASSWORD": "Y0ussef000"
+        "PASSWORD": "Y0ussef000",
+        "DATABASE_NAME": "eCommerceProducts"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5014"
@@ -21,7 +22,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "SERVER": "localhost",
         "USER": "root",
-        "PASSWORD": "Y0ussef000"
+        "PASSWORD": "Y0ussef000",
+        "DATABASE_NAME": "eCommerceProducts"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7109;http://localhost:5014"
@@ -35,7 +37,8 @@
         "ASPNETCORE_HTTP_PORTS": "8080",
         "SERVER": "host.docker.internal",
         "USER": "root",
-        "PASSWORD": "Y0ussef000"
+        "PASSWORD": "Y0ussef000",
+        "DATABASE_NAME": "eCommerceProducts"
       },
       "publishAllPorts": true,
       "useSSL": true

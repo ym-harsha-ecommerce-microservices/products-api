@@ -30,11 +30,13 @@ public static class DependencyInjection
             var server = Environment.GetEnvironmentVariable("SERVER");
             var user = Environment.GetEnvironmentVariable("USER");
             var password = Environment.GetEnvironmentVariable("PASSWORD");
+            var databaseName = Environment.GetEnvironmentVariable("DATABASE_NAME");
 
             var connectionString = configuration.GetConnectionString("MySqlConnection")!
                 .Replace("$SERVER", server)
                 .Replace("$USER", user)
-                .Replace("$PASSWORD", password);
+                .Replace("$PASSWORD", password)
+                .Replace("$DATABASE_NAME", databaseName);
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         });
 
