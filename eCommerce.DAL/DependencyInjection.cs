@@ -27,16 +27,16 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            var server = Environment.GetEnvironmentVariable("SERVER");
-            var user = Environment.GetEnvironmentVariable("USER");
-            var password = Environment.GetEnvironmentVariable("PASSWORD");
-            var databaseName = Environment.GetEnvironmentVariable("DATABASE_NAME");
+            var server = Environment.GetEnvironmentVariable("DB_SERVER");
+            var user = Environment.GetEnvironmentVariable("DB_USER");
+            var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+            var databaseName = Environment.GetEnvironmentVariable("DB_NAME");
 
             var connectionString = configuration.GetConnectionString("MySqlConnection")!
-                .Replace("$SERVER", server)
-                .Replace("$USER", user)
-                .Replace("$PASSWORD", password)
-                .Replace("$DATABASE_NAME", databaseName);
+                .Replace("$DB_SERVER", server)
+                .Replace("$DB_USER", user)
+                .Replace("$DB_PASSWORD", password)
+                .Replace("$DB_NAME", databaseName);
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         });
 
