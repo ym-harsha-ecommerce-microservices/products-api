@@ -88,7 +88,7 @@ public class ProductService(IProductsRepository productsRepository, IMapper mapp
 
         var product = await productsRepository.GetProductByConditionAsync(p => p.ProductID == productUpdateRequest.ProductID);
 
-        if (product == null) throw new ArgumentException("Invalid Product ID");
+        if (product == null) throw new CustomValidationException("Global", "Invalid Product ID");
 
         mapper.Map(productUpdateRequest, product);
 

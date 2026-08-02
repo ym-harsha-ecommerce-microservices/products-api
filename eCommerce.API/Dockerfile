@@ -30,4 +30,10 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DB_SERVER=postgres
+ENV DB_USER=root
+ENV DB_PASSWORD=Y0ussef000
+ENV DB_NAME=eCommerceProducts
+
 ENTRYPOINT ["dotnet", "eCommerce.API.dll"]

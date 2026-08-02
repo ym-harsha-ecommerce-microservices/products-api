@@ -52,6 +52,19 @@ public static class ProductAPIEndpoints
         .WithSummary("Search products")
         .WithDescription("Retrieves products whose category or name contains the given search string.");
 
+        group.MapPost("/search/product-ids", async ([FromServices] IProductService productService,
+            [FromBody] List<Guid> ids) =>
+        {
+            if (ids == null || ids.Count == 0)
+                return Results.BadRequest("The list of product IDs cannot be empty.");
+
+            var products = await productService.GetAllProductsByConditionAsync(p => ids.Contains(p.ProductID));
+
+            return Results.Ok(products);
+        })
+        .WithSummary("Get products by a list of IDs")
+        .WithDescription("Retrieves a list of products that match the provided Product IDs.");
+
         group.MapPost("/", async ([FromServices] IProductService productService,
             [FromBody] ProductAddRequest productAddRequest) =>
         {
@@ -88,5 +101,8 @@ public static class ProductAPIEndpoints
         })
         .WithSummary("Delete a product")
         .WithDescription("Deletes a product by its unique identifier.");
+
+
+
     }
 }

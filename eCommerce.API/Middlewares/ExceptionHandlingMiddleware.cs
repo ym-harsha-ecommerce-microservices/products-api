@@ -11,22 +11,10 @@ namespace eCommerce.API.Middlewares;
 /// and converts them into standardized JSON error responses, distinguishing
 /// between argument/validation errors and unexpected server errors.
 /// </summary>
-public class ExceptionHandlingMiddleware
+public class ExceptionHandlingMiddleware(RequestDelegate _next,
+    ILogger<ExceptionHandlingMiddleware> _logger,
+    IHostEnvironment _env)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="ExceptionHandlingMiddleware"/>.
-    /// </summary>
-    /// <param name="next">The next middleware delegate in the pipeline.</param>
-    /// <param name="logger">Logger used to record caught exceptions.</param>
-    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
     /// <summary>
     /// Invokes the next middleware in the pipeline, catching <see cref="ArgumentNullException"/>
     /// and <see cref="CustomValidationException"/> as 400 Bad Request responses, and any other
@@ -76,7 +64,12 @@ public class ExceptionHandlingMiddleware
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
             httpContext.Response.ContentType = "application/json";
 
-            await httpContext.Response.WriteAsJsonAsync(new { Error = "An unexpected error occurred. Please try again later." });
+            await httpContext.Response.WriteAsJsonAsync(new
+            {
+                Message = "An unexpected error occurred. Please try again later.",
+                Type = ex.GetType().ToString(),
+                Detail = _env.IsDevelopment() ? ex.StackTrace : null
+            });
         }
 
     }

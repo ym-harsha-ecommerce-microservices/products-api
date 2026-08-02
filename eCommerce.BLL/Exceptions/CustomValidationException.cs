@@ -15,4 +15,12 @@ public class CustomValidationException : Exception
     {
         Errors = errors;
     }
+    public CustomValidationException(string key, string error)
+        : base("One or more validation errors occurred.")
+    {
+        Errors = new Dictionary<string, string[]>
+        {
+            {key ,new [] {error} }
+        };
+    }
 }
