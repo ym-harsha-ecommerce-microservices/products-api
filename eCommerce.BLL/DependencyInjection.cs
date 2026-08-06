@@ -1,4 +1,5 @@
 ﻿using eCommerce.BLL.Mappers;
+using eCommerce.BLL.RabbitMQ;
 using eCommerce.BLL.Services.Contracts;
 using eCommerce.BLL.Services.Implementations;
 using eCommerce.BLL.Validators;
@@ -22,7 +23,23 @@ public static class DependencyInjection
     /// <returns>The same <see cref="IServiceCollection"/> instance, for chaining.</returns>
     public static IServiceCollection AddBusinessLogicLayer(this IServiceCollection services)
     {
+
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IRabbitMQPublisher, RabbitMQPublisher>();
+
+
+        services.Configure<RabbitMQOptions>(options =>
+        {
+            options.RABBITMQ_HOST = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
+            options.RABBITMQ_PORT = Environment.GetEnvironmentVariable("RABBITMQ_PORT") ?? "5672";
+            options.RABBITMQ_USERNAME = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest";
+            options.RABBITMQ_PASSWORD = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest";
+            options.RABBITMQ_PRODUCT_EXCHANGE = Environment.GetEnvironmentVariable("RABBITMQ_PRODUCT_EXCHANGE") ?? "product.exchange";
+            options.RABBITMQ_PRODUCT_UPDATE_NAME_ROUTEING_KEY = Environment.GetEnvironmentVariable("RABBITMQ_PRODUCT_UPDATE_NAME_ROUTEING_KEY") ?? "product.update.name";
+            options.RABBITMQ_PRODUCT_DELETE_ROUTEING_KEY = Environment.GetEnvironmentVariable("RABBITMQ_PRODUCT_DELETE_ROUTEING_KEY") ?? "product.delete";
+            options.RABBITMQ_PRODUCT_DELETE_QUEUE = Environment.GetEnvironmentVariable("RABBITMQ_PRODUCT_DELETE_QUEUE") ?? "product.delete.queue";
+            options.RABBITMQ_PRODUCT_UPDATE_QUEUE = Environment.GetEnvironmentVariable("RABBITMQ_PRODUCT_UPDATE_QUEUE") ?? "product.update.queue";
+        });
 
         services.AddAutoMapper(confg =>
         {

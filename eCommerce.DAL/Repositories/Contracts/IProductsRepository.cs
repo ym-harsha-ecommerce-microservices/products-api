@@ -50,5 +50,5 @@ public interface IProductsRepository
     /// </summary>
     /// <param name="productId">The unique identifier of the product to delete.</param>
     /// <returns>A <see cref="Task"/> containing <c>true</c> if the product was deleted; otherwise, <c>false</c>.</returns>
-    Task<bool> DeleteAsync(Guid productId);
+    Task<Product?> DeleteAsync(Guid productId);
 }

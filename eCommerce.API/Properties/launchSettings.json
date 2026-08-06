@@ -9,7 +9,16 @@
         "DB_SERVER": "localhost",
         "DB_USER": "root",
         "DB_PASSWORD": "Y0ussef000",
-        "DB_NAME": "eCommerceProducts"
+        "DB_NAME": "eCommerceProducts",
+        "RABBITMQ_HOST": "localhost",
+        "RABBITMQ_PORT": "5672",
+        "RABBITMQ_USERNAME": "guest",
+        "RABBITMQ_PASSWORD": "guest",
+        "RABBITMQ_PRODUCT_EXCHANGE": "product.exchange",
+        "RABBITMQ_PRODUCT_UPDATE_NAME_ROUTEING_KEY": "product.update.name",
+        "RABBITMQ_PRODUCT_UPDATE_QUEUE": "product.update.queue",
+        "RABBITMQ_PRODUCT_DELETE_ROUTEING_KEY": "product.delete",
+        "RABBITMQ_PRODUCT_DELETE_QUEUE": "product.delete.queue"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:9000"
@@ -23,7 +32,17 @@
         "DB_SERVER": "localhost",
         "DB_USER": "root",
         "DB_PASSWORD": "Y0ussef000",
-        "DB_NAME": "eCommerceProducts"
+        "DB_NAME": "eCommerceProducts",
+        "RABBITMQ_HOST": "localhost",
+        "RABBITMQ_PORT": "5672",
+        "RABBITMQ_USERNAME": "guest",
+        "RABBITMQ_PASSWORD": "guest",
+        "RABBITMQ_PRODUCT_EXCHANGE": "product.exchange",
+        "RABBITMQ_PRODUCT_UPDATE_NAME_ROUTEING_KEY": "product.update.name",
+        "RABBITMQ_PRODUCT_UPDATE_QUEUE": "product.update.queue",
+        "RABBITMQ_PRODUCT_DELETE_ROUTEING_KEY": "product.delete",
+        "RABBITMQ_PRODUCT_DELETE_QUEUE": "product.delete.queue"
+
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:9000;http://localhost:9000"
@@ -38,7 +57,17 @@
         "DB_SERVER": "host.docker.internal",
         "DB_USER": "root",
         "DB_PASSWORD": "Y0ussef000",
-        "DB_NAME": "eCommerceProducts"
+        "DB_NAME": "eCommerceProducts",
+        "RABBITMQ_HOST": "localhost",
+        "RABBITMQ_PORT": "5672",
+        "RABBITMQ_USERNAME": "guest",
+        "RABBITMQ_PASSWORD": "guest",
+        "RABBITMQ_PRODUCT_EXCHANGE": "product.exchange",
+        "RABBITMQ_PRODUCT_UPDATE_NAME_ROUTEING_KEY": "product.update.name",
+        "RABBITMQ_PRODUCT_UPDATE_QUEUE": "product.update.queue",
+        "RABBITMQ_PRODUCT_DELETE_ROUTEING_KEY": "product.delete",
+        "RABBITMQ_PRODUCT_DELETE_QUEUE": "product.delete.queue"
+
       },
       "publishAllPorts": true,
       "useSSL": true

@@ -20,16 +20,20 @@ internal class ProductsRepository(ApplicationDbContext context) : IProductsRepos
         return null;
     }
     /// <inheritdoc/>
-    public async Task<bool> DeleteAsync(Guid productId)
+    public async Task<Product?> DeleteAsync(Guid productId)
     {
         var product = await _context.Products.FindAsync(productId);
         if (product == null)
         {
-            return false;
+            return null;
         }
         _context.Products.Remove(product);
         var rowAffected = await _context.SaveChangesAsync();
-        return rowAffected > 0;
+        if (rowAffected > 0)
+        {
+            return product;
+        }
+        return null;
     }
     /// <inheritdoc/>
     public async Task<Product?> GetProductByConditionAsync(Expression<Func<Product, bool>> condition)
