@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="eCommerce.API/eCommerce.API.csproj" />
+  <Project Path="eCommerce.BLL.Tests/eCommerce.BLL.Tests.csproj" Id="a3b74f75-0f9c-492b-a8e8-da9b31f79874" />
   <Project Path="eCommerce.BLL/eCommerce.BLL.csproj" />
   <Project Path="eCommerce.DAL/eCommerce.DAL.csproj" />
 </Solution>
