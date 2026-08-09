@@ -1,0 +1,23 @@
+name: Products API CD
+
+# Trigger the workflow on push or pull request events to the main branch
+on:
+  workflow_run:
+    workflows: ["Products API CI"]
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+    # This job will only run if the CI workflow completed successfully
+  deploy-to-local-cluster:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted
+    steps:
+    - name: Verify Local Kubernetes Connection
+      run: kubectl get nodes
+    - name: Deploy / Update Image in Kubernetes
+      run: |
+        kubectl set image deployment/products-api-deployment products-api=ghcr.io/${{ github.repository_owner }}/ecommerce-products-api:latest -n ecommerce-infrastructure
+        kubectl rollout restart deployment/products-api-deployment -n ecommerce-infrastructure
